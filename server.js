@@ -7,6 +7,14 @@ server.listen(3001,'localhost',() => {
 });*/
 const express = require('express');
 const app = express();
+//middleware to log all requests on console or log file
+const logger = (request, response, next) => {
+    console.log('Middleware');
+    next(); //Pass request to next method
+    //return response.json({message: 'Logging Requests'});
+}
+//use middleware
+app.use(logger);
 app.get('/', (request, response) => {
     response.json({message: 'Express GET'});
 });
@@ -22,6 +30,14 @@ app.patch('/', (request, response) => {
 app.delete('/', (request, response) => {
     response.json({message: 'Express DELETE'});
 });
+app.get('/products', (request, response) => {
+    response.json({message: 'Express GET PRODUCTS'});
+});
+const errorRoute = (request, response, next) => {
+    console.log('Error Route');
+    return response.json({message: 'Route Not Found'})
+}
+app.use(errorRoute);
 app.listen(3001, 'localhost', (error) => {
     if (error) {
         console.log('Error in running the server');
