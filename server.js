@@ -5,14 +5,28 @@ const server = http.createServer((request,response) => {
 server.listen(3001,'localhost',() => {
     console.log("Running");
 });*/
-const express = require('express'); //importing express
-const app = express(); //creating a server application using express()
-app.get('/', (request,response) => {
-    response.json({message: 'Hello World!'});
+const express = require('express');
+const app = express();
+app.get('/', (request, response) => {
+    response.json({message: 'Express GET'});
 });
-app.use((request,response,next) => {
-    response.json({message: 'Route not found'});
+app.post('/', (request, response) => {
+    response.json({message: 'Express POST'});
 });
-app.listen(3001, 'localhost', () => {
-    console.log('Server running at http://localhost:3001');
-}); //starting the server to listen for http request
+app.put('/', (request, response) => {
+    response.json({message: 'Express PUT'});
+});
+app.patch('/', (request, response) => {
+    response.json({message: 'Express PATCH'});
+});
+app.delete('/', (request, response) => {
+    response.json({message: 'Express DELETE'});
+});
+app.listen(3001, 'localhost', (error) => {
+    if (error) {
+        console.log('Error in running the server');
+        console.log(error.message);
+        return;
+    }
+    console.log("Server running at localhost:3001");
+});
